@@ -9,7 +9,7 @@
   <% end %>
 </p>
 
-<%= link_to icon('rss-square'), feed_link, class: 'feed-link', title: t('.feed_title', name: name) %>
+<%= link_to icon('fab', 'rss-square'), feed_link, class: 'feed-link', title: t('.feed_title', name: name) %>
 
 <%= render partial: 'search', locals: { with_icon: true } %>
 
