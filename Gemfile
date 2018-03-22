@@ -23,7 +23,7 @@ group :development, :test do
 end
 
 group :production do
-  gem 'skylight', '~> 1.5'     # Before newrelic_rpm for correct reporting
+  gem 'skylight', '~> 1.6'     # Before newrelic_rpm for correct reporting
   gem 'newrelic_rpm', '~> 4.8'
   gem 'rails_12factor', '~> 0.0.2'
   gem 'rollbar', '~> 2.15'
