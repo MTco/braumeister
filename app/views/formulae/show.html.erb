@@ -29,19 +29,19 @@
       <table class="versions">
         <% unless @formula.stable_version.nil? %>
           <tr>
-            <td><span class="spec-stable"></td>
+            <td><span class="spec-stable"></span></td>
             <td><strong class="version"><%= @formula.stable_version %></strong></td>
           </tr>
         <% end %>
         <% unless @formula.devel_version.nil? %>
           <tr>
-            <td><span class="spec-devel"></td>
+            <td><span class="spec-devel"></span></td>
             <td><strong class="version"><%= @formula.devel_version %></strong></td>
           </tr>
         <% end %>
         <% unless @formula.head_version.nil? %>
           <tr>
-            <td><span class="spec-head"></td>
+            <td><span class="spec-head"></span></td>
             <td><strong class="version"><%= @formula.head_version %></strong></td>
           </tr>
         <% end %>
