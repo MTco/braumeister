@@ -40,6 +40,8 @@ module MainImport
 
   def official_taps
     brew_taps.const_get :OFFICIAL_TAPS
+  rescue NameError
+    [].freeze
   end
 
   def update_deprecated_taps
