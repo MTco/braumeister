@@ -1,13 +1,13 @@
 # This code is free software; you can redistribute it and/or modify it under
 # the terms of the new BSD License.
 #
-# Copyright (c) 2012-2017, Sebastian Staudt
+# Copyright (c) 2012-2018, Sebastian Staudt
 
 module ApplicationHelper
 
   def formula_link(formula, options = {})
     options = { class: 'formula' }.merge options
-    url_options = formula.dupe? ? [formula.repository, formula] : formula
+    url_options = formula.repository.core? ? formula : [formula.repository, formula]
     link_to formula.name, url_for(url_options), options
   end
 
