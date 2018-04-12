@@ -66,7 +66,7 @@ GEM
       sprockets (< 4.0)
     concurrent-ruby (1.0.5)
     crass (1.0.4)
-    dalli (2.7.7)
+    dalli (2.7.8)
     diff-lcs (1.3)
     docile (1.1.5)
     erubi (1.7.1)
@@ -208,7 +208,7 @@ PLATFORMS
 DEPENDENCIES
   codeclimate-test-reporter (~> 1.0)
   compass-rails (~> 3.0.2)
-  dalli (~> 2.7.7)
+  dalli (~> 2.7.8)
   font-awesome-sass (~> 5.0)
   foreman (~> 0.60)
   kaminari-actionview (~> 1.1)
