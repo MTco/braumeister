@@ -4,6 +4,7 @@ sudo: false
 before_install:
   - sed -i '2d' Gemfile
   - gem update --system
+  - gem install bundler
 
 before_script:
   - mongo braumeister-test db/mongodb_setup.js
