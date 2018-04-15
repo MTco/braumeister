@@ -1,7 +1,7 @@
 # This code is free software; you can redistribute it and/or modify it under
 # the terms of the new BSD License.
 #
-# Copyright (c) 2012-2017, Sebastian Staudt
+# Copyright (c) 2012-2018, Sebastian Staudt
 
 require 'main_import'
 require 'tap_import'
@@ -77,8 +77,6 @@ namespace :braumeister do
     rollbar_rescued do
       repo = Repository.main.extend MainImport
       repo.update_status
-      repo.update_deprecated_taps
-      repo.create_missing_taps
     end
   end
 
