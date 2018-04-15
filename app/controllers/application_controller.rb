@@ -2,7 +2,7 @@
 # This code is free software; you can redistribute it and/or modify it under
 # the terms of the new BSD License.
 #
-# Copyright (c) 2012-2017, Sebastian Staudt
+# Copyright (c) 2012-2018, Sebastian Staudt
 
 class ApplicationController < ActionController::Base
 
@@ -78,10 +78,6 @@ class ApplicationController < ActionController::Base
   private
 
   def main_page
-    @taps = Repository.only(%i[_id date letters name sha updated_at])
-                      .current_taps.order_by(%i[name asc])
-                      .sort_by { |r| r.core? ? 0 : 1 }
-
     top5 = Formula.limit(5).order_by(%i[date desc])
                   .only %i[_id name repository_id]
     linked_formulae = top5.where(removed: false)

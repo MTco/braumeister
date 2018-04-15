@@ -39,19 +39,3 @@
   <h3>🚫 Recently removed formulae</h3>
   <%= @removed.map { |f| formula_link f }.join(', ').html_safe %>
 </div>
-
-<div class="border-bottom" ></div>
-
-<div id="taps" class="border-top">
-  <h2>🚰 Browse specific taps</h2>
-  <div class="listing">
-  <% @taps.each do |repo| %>
-    <div class="repo">
-      <% if letter = repo.letters.first %>
-        <%= link_to repo.short_name, letter_repository_formulae_path(repo, letter) %>
-      <% else %>
-        <%= repo.short_name %>
-      <% end %></div>
-  <% end %>
-  </div>
-</div>
