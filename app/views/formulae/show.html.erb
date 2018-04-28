@@ -1,8 +1,5 @@
 <div class="show">
   <h1><%= @formula.name %></h1>
-  <% unless all? %>
-    <div class="subtitle">in <%= link_to name, letter_repository_formulae_path(@repository, @repository.first_letter), class: 'repo' %></div>
-  <% end %>
 
   <div id="basic">
     <% unless @formula.description.nil? %>

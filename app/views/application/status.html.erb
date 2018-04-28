@@ -16,5 +16,5 @@
 <div id="timestamps">
   The repository has been updated <%= timestamp Repository.core.updated_at %>.<br>
   The last change happened <%= timestamp Repository.core.date %>.<br>
-  Current Git commit SHA: <%= link_to Repository.core.sha, "https://github.com/#{Repository.core.name}/tree/#{Repository.core.sha}" %>
+  Current Git commit SHA: <%= link_to Repository.core.sha, "https://github.com/#{Repository::CORE}/tree/#{Repository.core.sha}" %>
 </div>

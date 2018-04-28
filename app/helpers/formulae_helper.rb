@@ -21,11 +21,7 @@ module FormulaeHelper
   end
 
   def letters
-    if all?
-      Repository.all.map(&:letters).flatten.uniq.sort
-    else
-      @repository.letters
-    end
+    Repository.all.map(&:letters).flatten.uniq.sort
   end
 
   def name

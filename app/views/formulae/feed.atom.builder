@@ -1,15 +1,13 @@
 # This code is free software; you can redistribute it and/or modify it under
 # the terms of the new BSD License.
 #
-# Copyright (c) 2012-2017, Sebastian Staudt
+# Copyright (c) 2012-2018, Sebastian Staudt
 
-atom_feed :id => "tag:formulae.brew.sh,2012:#{all? ? 'all' : @repository.name}",
+atom_feed :id => "tag:formulae.brew.sh,2012:all",
           :schema_data => 2012,
           'xmlns:opensearch' => 'http://a9.com/-/spec/opensearch/1.1/' do |feed|
-  title = 'Formula updates'
-  title += " in #{@repository.name}" unless all?
 
-  feed.title title + '– formulae.brew.sh'
+  feed.title 'Formula updates – formulae.brew.sh'
 
   feed.link rel: 'search', href: '/opensearch.xml', title: 'formulae.brew.sh – Search',
             type: 'application/opensearchdescription+xml'

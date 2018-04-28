@@ -8,20 +8,12 @@ require 'rails_helper'
 describe ApplicationHelper do
 
   describe '#formulae_link' do
-    it 'provides links to core formulae' do
+    it 'provides links to formulae' do
       repo = Repository.core
       formula = repo.formulae.find_or_create_by name: 'git'
       formula.repository = repo
 
       expect(helper.formula_link(formula)).to eq('<a class="formula" href="/formula/git">git</a>')
-    end
-
-    it 'provides links to formulae in a tap repository' do
-      repo = Repository.find_or_create_by name: 'Homebrew/homebrew-science'
-      formula = repo.formulae.find_or_create_by name: 'gromacs'
-      formula.repository = repo
-
-      expect(helper.formula_link(formula)).to eq('<a class="formula" href="/repos/Homebrew/homebrew-science/formula/gromacs">gromacs</a>')
     end
   end
 

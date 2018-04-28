@@ -1,7 +1,7 @@
 # This code is free software; you can redistribute it and/or modify it under
 # the terms of the new BSD License.
 #
-# Copyright (c) 2012-2017, Sebastian Staudt
+# Copyright (c) 2012-2018, Sebastian Staudt
 
 require 'text'
 
@@ -13,18 +13,16 @@ class FormulaeController < ApplicationController
   def browse
     letter = params[:letter]
     @title = "Browse formulae – #{letter.upcase}"
-    @title << " – #{helpers.name}" unless all?
 
-    @formulae = formulae.letter(letter)
-                        .where(removed: false).order_by(%i[name asc])
-                        .page(params[:page]).per 30
+    @formulae = Formula.letter(letter)
+                       .where(removed: false).order_by(%i[name asc])
+                       .page(params[:page]).per 30
 
     fresh_when etag: etag, public: true
   end
 
   def feed
-    revisions = all? ? Revision : @repository.revisions
-    @revisions = revisions.without_bot
+    @revisions = @repository.revisions.without_bot
                           .includes(:author, :added_formulae, :updated_formulae, :removed_formulae)
                           .order_by(%i[date desc]).limit 50
 
@@ -40,9 +38,8 @@ class FormulaeController < ApplicationController
 
     term = params[:search].force_encoding('UTF-8').delete "\u0000"
     @title = "Search for: #{term}"
-    @title << " in #{helpers.name}" unless all?
     search_term = /#{Regexp.escape term}/i
-    @formulae = formulae.and removed: false, :$or =>
+    @formulae = Formula.and removed: false, :$or =>
       [
         { aliases: search_term },
         { description: search_term },
@@ -68,9 +65,9 @@ class FormulaeController < ApplicationController
   end
 
   def show
-    @formulae = formulae.includes(:deps, :revdeps).where(name: params[:id]).to_a
+    @formulae = Formula.includes(:deps, :revdeps).where(name: params[:id]).to_a
     if @formulae.empty?
-      formula = formulae.all_in(aliases: [params[:id]]).first
+      formula = Formula.all_in(aliases: [params[:id]]).first
       unless formula.nil?
         redirect_to formula
         return
@@ -87,7 +84,6 @@ class FormulaeController < ApplicationController
     end
     @formula = @formulae.first
     @title = @formula.name.dup
-    @title << " – #{helpers.name}" unless all?
     @revisions = @formula.revisions.limit(5).without_bot.includes(:author)
                          .order_by(%i[date desc]).to_a
 
@@ -96,25 +92,8 @@ class FormulaeController < ApplicationController
 
   protected
 
-  def all?
-    @repository.nil?
-  end
-  helper_method :all?
-
   def etag
-    if all? && Revision.last
-      Revision.last.sha
-    elsif @repository
-      @repository.sha
-    end
-  end
-
-  def formulae
-    if all?
-      Formula
-    elsif @repository
-      @repository.formulae
-    end
+    Repository.core.sha
   end
 
   def select_repository

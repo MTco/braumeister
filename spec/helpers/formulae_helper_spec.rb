@@ -34,37 +34,10 @@ describe FormulaeHelper do
   end
 
   describe '#letters' do
-    let(:repo) do
-      mock letters: %w[A B C]
-    end
-
-    it 'returns all available letters in all repositories' do
-      helper.expects(:all?).returns true
-      Repository.stubs(:all).returns [repo, mock(letters: %w[C D E F])]
-
-      expect(helper.letters).to eq(%w[A B C D E F])
-    end
-
-    it 'returns all available letters in single repositories' do
-      helper.expects(:all?).returns false
-      helper.instance_variable_set :@repository, repo
+    it 'returns all available letters' do
+      Repository.stubs(:all).returns [mock(letters: %w[A B C])]
 
       expect(helper.letters).to eq(%w[A B C])
-    end
-  end
-
-  describe '#name' do
-    it 'returns nil for all repositories' do
-      helper.stubs(:all?).returns true
-
-      expect(helper.name).to be_nil
-    end
-
-    it 'returns the name for a single repository' do
-      helper.stubs(:all?).returns false
-      helper.instance_variable_set :@repository, mock(name: 'Homebrew/homebrew-games')
-
-      expect(helper.name).to eq('Homebrew/homebrew-games')
     end
   end
 

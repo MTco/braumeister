@@ -7,8 +7,7 @@ module ApplicationHelper
 
   def formula_link(formula, options = {})
     options = { class: 'formula' }.merge options
-    url_options = formula.repository.core? ? formula : [formula.repository, formula]
-    link_to formula.name, url_for(url_options), options
+    link_to formula.name, url_for(formula), options
   end
 
   def timestamp(time)

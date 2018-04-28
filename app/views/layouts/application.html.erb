@@ -25,7 +25,7 @@
   <%= render 'layouts/google_analytics' if Rails.env == 'production' %>
   <%= render 'layouts/structured_data' %>
 </head>
-<body<% unless @repository.nil? || @repository.core? %> data-repository="<%= @repository.name %>"<% end %>>
+<body>
     <div id="header">
         <%= link_to 'Formulae', root_path %>
     </div>

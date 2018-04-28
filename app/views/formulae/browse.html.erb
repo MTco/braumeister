@@ -1,15 +1,10 @@
 <h1>Package listing</h1>
 <p class="listing-header">
-  <% if all? %>
-    This is a listing of all packages available via the Homebrew package manager
-    for macOS.
-  <% else %>
-    This is a listing of all Homebrew packages available in the tap repository
-    <%= link_to name, "https://github.com/#{name}" %>.
-  <% end %>
+  This is a listing of all packages available via the Homebrew package manager
+  for macOS.
 </p>
 
-<%= link_to icon('fas', 'rss-square'), '/feed.atom', class: 'feed-link', title: t('.feed_title', name: name) %>
+<%= link_to icon('fas', 'rss-square'), '/feed.atom', class: 'feed-link' %>
 
 <%= render partial: 'search', locals: { with_icon: true } %>
 
@@ -17,7 +12,7 @@
   <% ('a'..'z').each do |letter| %>
     <li>
       <% if letters.include? letter
-        letter_url = all? ? letter_formulae_path(letter) : letter_repository_formulae_path(name, letter)
+        letter_url = letter_formulae_path letter
         letter_class = 'current' if letter == (params[:letter] || '').downcase %>
         <%= link_to_unless_current letter.upcase, letter_url, class: letter_class do %>
           <span class="current"><%= letter.upcase %></span>

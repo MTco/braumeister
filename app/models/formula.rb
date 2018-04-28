@@ -58,7 +58,7 @@ class Formula
   end
 
   def raw_url
-    "https://raw.github.com/#{repository.name}/HEAD/#{path}"
+    "https://raw.github.com/#{Repository::CORE}/HEAD/#{path}"
   end
 
   def generate_history!

@@ -84,41 +84,16 @@ describe Formula do
     end
   end
 
-  context 'for a formula in the core repository' do
-
-    describe '#path' do
-      it 'returns the relative path' do
-        expect(formula.path).to eq('Formula/git.rb')
-      end
+  describe '#path' do
+    it 'returns the relative path' do
+      expect(formula.path).to eq('Formula/git.rb')
     end
-
-    describe '#raw_url' do
-      it 'returns the GitHub URL of the raw formula file' do
-        expect(formula.raw_url).to eq("https://raw.github.com/#{Repository::CORE}/HEAD/Formula/git.rb")
-      end
-    end
-
   end
 
-  context 'for a formula in a tap repository' do
-
-    let :formula do
-      repo = Repository.new name: 'Homebrew/homebrew-php'
-      Formula.new name: 'php', repository: repo
+  describe '#raw_url' do
+    it 'returns the GitHub URL of the raw formula file' do
+      expect(formula.raw_url).to eq("https://raw.github.com/Homebrew/homebrew-core/HEAD/Formula/git.rb")
     end
-
-    describe '#path' do
-      it 'returns the relative path' do
-        expect(formula.path).to eq('php.rb')
-      end
-    end
-
-    describe '#raw_url' do
-      it 'returns the GitHub URL of the raw formula file' do
-        expect(formula.raw_url).to eq('https://raw.github.com/Homebrew/homebrew-php/HEAD/php.rb')
-      end
-    end
-
   end
 
 end
