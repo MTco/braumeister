@@ -17,21 +17,6 @@ describe FormulaeHelper do
     end
   end
 
-  describe '#feed_link' do
-    it 'returns the short feed link for all repositories' do
-      helper.stubs(:all?).returns true
-
-      expect(helper.feed_link).to eq('/feed.atom')
-    end
-
-    it 'returns the full feed link for a specific repositiory' do
-      helper.stubs(:all?).returns false
-      helper.instance_variable_set :@repository, mock(name: 'Homebrew/homebrew-games')
-
-      expect(helper.feed_link).to eq('/repos/Homebrew/homebrew-games/feed.atom')
-    end
-  end
-
   describe '#formula_diff_link' do
     it 'returns a correct link to the commit’s diff of the formula' do
       formula = mock path: 'Formula/git.rb',

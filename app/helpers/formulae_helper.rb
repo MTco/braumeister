@@ -16,12 +16,6 @@ module FormulaeHelper
     link_to '', "https://github.com/#{formula.repository_id}/commit/#{rev.sha}#diff-#{diff_md5}", target: :_blank
   end
 
-  def feed_link
-    feed_link = '/feed.atom'
-    feed_link = "/repos/#{@repository.name}" + feed_link unless all?
-    feed_link
-  end
-
   def history_link(formula)
     link_to 'Complete formula history at GitHub', "https://github.com/#{formula.repository_id}/commits/HEAD/#{formula.path}", target: :_blank
   end
