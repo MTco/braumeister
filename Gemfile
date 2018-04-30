@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 ruby '2.5.1'
 
-gem 'compass-rails', '~> 3.0.2'
+gem 'compass-rails', '~> 3.1.0'
 gem 'dalli', '~> 2.7.8'
 gem 'font-awesome-sass', '~> 5.0'
 gem 'kaminari-actionview', '~> 1.1'
