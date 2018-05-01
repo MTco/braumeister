@@ -22,9 +22,9 @@ class FormulaeController < ApplicationController
   end
 
   def feed
-    @revisions = @repository.revisions.without_bot
-                          .includes(:author, :added_formulae, :updated_formulae, :removed_formulae)
-                          .order_by(%i[date desc]).limit 50
+    @revisions = Revision.without_bot
+                         .includes(:author, :added_formulae, :updated_formulae, :removed_formulae)
+                         .order_by(%i[date desc]).limit 50
 
     respond_to do |format|
       format.atom
@@ -100,15 +100,13 @@ class FormulaeController < ApplicationController
     repository_id = params[:repository_id]
     return if repository_id.nil?
 
-    @repository = Repository.where(_id: /^#{repository_id}$/i)
-                            .only(:_id, :letters, :name, :sha, :updated_at).first
-    if @repository.nil?
-      raise Mongoid::Errors::DocumentNotFound.new Repository, [], repository_id
+    if repository_id.downcase == Repository::CORE.downcase
+      redirect_to request.url.sub("/repos/#{repository_id}", ''),
+                  status: :moved_permanently
+      return
     end
 
-    if @repository.name != repository_id
-      redirect_to request.url.sub "/repos/#{repository_id}", "/repos/#{@repository.name}"
-    end
+    not_found
   end
 
 end

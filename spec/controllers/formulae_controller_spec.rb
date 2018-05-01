@@ -9,47 +9,30 @@ describe FormulaeController do
 
   describe '#select_repository' do
     it 'sets the repository' do
-      repo = mock
-      repo.expects(:name).returns 'Homebrew/homebrew-versions'
-      criteria = mock
-      Repository.expects(:where).with(_id: /^Homebrew\/homebrew-versions$/i).returns criteria
-      criteria.expects(:only).with(:_id, :letters, :name, :sha, :updated_at).returns [ repo ]
-      controller.expects(:params).returns({ repository_id: 'Homebrew/homebrew-versions' })
+      controller.expects(:params).returns repository_id: 'Homebrew/homebrew-php'
+
+      controller.expects :not_found
 
       controller.send :select_repository
-
-      expect(controller.instance_variable_get(:@repository)).to eq(repo)
     end
 
     it 'the repository defaults to nil' do
       controller.send :select_repository
 
       expect(controller.instance_variable_get(:@repository)).to be_nil
+
+     controller.send :select_repository
     end
 
-    it 'redirects to the correct repository if capitalization is incorrect' do
+    it 'redirects to the base URL for Homebrew/homebrew-core' do
+      controller.expects(:params).returns repository_id: 'Homebrew/homebrew-core'
       request = mock
-      request.expects(:url).returns 'http://formulae.brew.sh/repos/Homebrew/Homebrew-versions/browse'
+      request.expects(:url).returns 'http://formulae.brew.sh/repos/Homebrew/homebrew-core/browse'
       controller.expects(:request).returns request
 
-      repo = mock
-      repo.expects(:name).twice.returns 'Homebrew/homebrew-versions'
-      criteria = mock
-      Repository.expects(:where).with(_id: /^Homebrew\/Homebrew-versions$/i).returns criteria
-      criteria.expects(:only).with(:_id, :letters, :name, :sha, :updated_at).returns [ repo ]
-      controller.expects(:params).returns({ repository_id: 'Homebrew/Homebrew-versions' })
-      controller.expects(:redirect_to).with 'http://formulae.brew.sh/repos/Homebrew/homebrew-versions/browse'
+      controller.expects(:redirect_to).with 'http://formulae.brew.sh/browse', status: :moved_permanently
 
       controller.send :select_repository
-    end
-
-    it 'raises Mongoid::Errors::DocumentNotFound if no repository is found' do
-      criteria = mock
-      Repository.expects(:where).with(_id: /^Homebrew\/unknown$/i).returns criteria
-      criteria.expects(:only).with(:_id, :letters, :name, :sha, :updated_at).returns []
-      controller.expects(:params).returns({ repository_id: 'Homebrew/unknown' })
-
-      expect { controller.send :select_repository }.to raise_error(Mongoid::Errors::DocumentNotFound)
     end
   end
 
