@@ -16,7 +16,7 @@ class ApplicationController < ActionController::Base
     error_page :service_unavailable
   end
 
-  before_action :ensure_html
+  before_action :ensure_html, except: :sitemap
 
   def index
     main_page
