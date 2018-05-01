@@ -16,7 +16,7 @@ atom_feed :id => "tag:formulae.brew.sh,2012:all",
 
   add_entry = ->(status, formula, revision) do
     entry_options = {
-      id: "tag:formulae.brew.sh,2012:#{formula.repository.name}/#{formula.name}-#{revision.sha}",
+      id: "tag:formulae.brew.sh,2012:#{Repository::CORE}/#{formula.name}-#{revision.sha}",
       updated:   revision.date,
       url: formula.dupe? ? polymorphic_path([formula.repository, formula]) : polymorphic_path(formula)
     }
