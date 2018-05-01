@@ -42,33 +42,25 @@ namespace :braumeister do
 
   Rails.logger = Logger.new STDOUT
 
-  task :select_repos, [:repo] => :update_main do |_, args|
-    if args[:repo].nil?
-      repos = Repository.current_taps
-    else
-      repos = [ Repository.find(args[:repo]) ]
-    end
-
-    @repos = repos.map { |repo| repo.extend TapImport }
+  task :select_repo, [:repo] => :update_main do
+    @core = Repository.core.extend TapImport
   end
 
   desc 'Completely regenerates one or all repositories and their formulae'
-  task_with_tracing :regenerate, [:repo] => :select_repos do
-    @repos.each(&:regenerate!)
+  task_with_tracing :regenerate, [:repo] => :select_repo do
+    @core.regenerate!
   end
 
   desc 'Regenerates the history of one or all repositories'
-  task_with_tracing :regenerate_history, [:repo] => :select_repos do
-    @repos.each(&:generate_history!)
+  task_with_tracing :regenerate_history, [:repo] => :select_repo do
+    @core.generate_history!
   end
 
   desc 'Pulls the latest changes from one or all repositories'
-  task_with_tracing :update, [:repo] => :select_repos do
-    @repos.each do |repo|
-      rollbar_rescued do
-        last_sha = repo.refresh
-        repo.generate_history last_sha
-      end
+  task_with_tracing :update, [:repo] => :select_repo do
+    rollbar_rescued do
+      last_sha = @core.refresh
+      @core.generate_history last_sha
     end
   end
 
@@ -81,11 +73,9 @@ namespace :braumeister do
   end
 
   desc 'Updates metadata from one or all tap repositories'
-  task_with_tracing :update_metadata => :select_repos do
-    @repos.each do |repo|
-      rollbar_rescued do
-        repo.update_metadata
-      end
+  task_with_tracing :update_metadata do
+    rollbar_rescued do
+      CORE.update_metadata
     end
   end
 
