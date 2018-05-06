@@ -11,11 +11,11 @@ class ApiController < FormulaeController
   def version
     formula_id = params[:formula_id]
 
-    @formula = formulae.where(name: formula_id).first
+    @formula = Formula.where(name: formula_id).first
     if @formula.nil?
-      @formula = formulae.all_in(aliases: [formula_id]).first
+      @formula = Formula.all_in(aliases: [formula_id]).first
       unless @formula.nil?
-        redirect_to repository_formula_version_path(@formula.repository.name, @formula)
+        redirect_to formula_version_path(@formula)
         return
       end
       raise Mongoid::Errors::DocumentNotFound.new(Formula, [], formula_id)
